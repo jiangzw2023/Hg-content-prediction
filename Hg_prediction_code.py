@@ -175,3 +175,43 @@ print("\n--- Model Evaluation Results（Hg in original units） ---")
 for name, (r2, rmse, mae) in metrics.items():
     print(f"{name:12s} | R²: {r2:.3f} | RMSE: {rmse:.3f} | MAE: {mae:.3f}")
 print(f"\n✅ Figure saved as SVG: {filename}")
+
+
+#Hg prediction
+
+import os
+import pandas as pd
+
+# Read multiple sheets
+sheet_dict = pd.read_excel(
+    'D:/Compiled_dataset.xlsx',
+    sheet_name=['Velkerri', 'hougou', 'chicheng']
+)
+
+
+for name, df in sheet_dict.items():
+    try:
+    
+        df['TOC_TS'] = df['TOC'] * df['TS']
+        df['Mo_Al'] = df['Mo'] / (df['Al'] + 1e-6)
+        df['P_Al'] = df['P'] / (df['Al'] + 1e-6)
+
+        
+        X_new_scaled = scaler.transform(df[features])
+        X_new_poly = poly.transform(X_new_scaled)
+
+        
+        Y_pred_trans_new = stacking.predict(X_new_poly)
+        Y_pred_new = transformer.inverse_transform(Y_pred_trans_new.reshape(-1, 1)).ravel()
+
+        
+        df['Predicted_Hg'] = Y_pred_new
+
+
+        save_path = f'D:/Hg_predictions_{name}.xlsx'
+        df.to_excel(save_path, index=False)
+        print(f"✅ Hg prediction completed for {name}, saved to: {save_path}")
+
+    except KeyError as e:
+        print(f"❌ Missing columns in {name}: {e}")
+
