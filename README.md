@@ -3,7 +3,7 @@
 This repository contains code and data for a machine learning regression model used to predict mercury (Hg) content based on geochemical features. The approach supports geochemical proxy analysis and paleoenvironmental reconstruction in deep-time studies.
 
 ## This model was applied in the study:
-Jiang ZW, Cai CF, Dou LR, et al. (2025). Volcanism-Driven Shift in the Mesoproterozoic Carbon Cycle and Oxygen Dynamics, under review.
+Jiang ZW, Cai CF, Dou LR, et al. (2026). Volcanism Driven Shift in the Mesoproterozoic Carbon Cycle and Oxygen Dynamics.
 
 ## Contents：
 ### •	Hg_prediction_code.py：
